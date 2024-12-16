@@ -58,9 +58,9 @@ public class TestOptimizePartition {
 
         // initialize a new genetic algorithm
         GeneticAlgorithm ga = new GeneticAlgorithm(
-                new PartitionChromosomeCrossover(),
+                new PartitionChromosomeCrossover(new MaxValuePartitionChromosome.MaxValuePartitionFitness()),
                 1,
-                new PartitionChromosomeMutation(),
+                new PartitionChromosomeMutation(new MaxValuePartitionChromosome.MaxValuePartitionFitness()),
                 0.10,
                 new TournamentSelection(TOURNAMENT_ARITY));
 
@@ -75,8 +75,8 @@ public class TestOptimizePartition {
 
         // best chromosome from the final population
         Chromosome bestFinal = finalPopulation.getFittestChromosome();
-        System.out.println("Best fitness: " + bestFinal.fitness());
-        System.out.println(bestFinal.toString());
+        // System.out.println("Best fitness: " + bestFinal.fitness());
+        // System.out.println(bestFinal.toString());
         assertEquals(bestFinal.fitness(), 50.0, 0.0);
     }
 }

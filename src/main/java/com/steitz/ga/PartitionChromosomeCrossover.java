@@ -9,6 +9,13 @@ import org.apache.commons.math3.genetics.CrossoverPolicy;
 
 public class PartitionChromosomeCrossover implements CrossoverPolicy {
 
+    /** Fitness function */
+    final PartitionFitness fitness;
+
+    public PartitionChromosomeCrossover(PartitionFitness fitness) {
+        this.fitness = fitness;
+    }
+
     /**
      * Cross two PartitionChromosome instances by creating two children as follows:
      * The first child takes the value of the first parent for even indices,
@@ -48,8 +55,8 @@ public class PartitionChromosomeCrossover implements CrossoverPolicy {
         Partition p1 = new Partition(child1);
         Partition p2 = new Partition(child2);
 
-        return new ChromosomePair(new PartitionChromosome(p1.getRepresentation()),
-                new PartitionChromosome(p2.getRepresentation()));
+        return new ChromosomePair(new PartitionChromosome(p1.getRepresentation(), fitness),
+                new PartitionChromosome(p2.getRepresentation(), fitness));
     }
 
 }

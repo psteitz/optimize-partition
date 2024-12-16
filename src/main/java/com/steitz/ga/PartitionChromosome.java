@@ -7,19 +7,24 @@ import org.apache.commons.math3.genetics.AbstractListChromosome;
 import org.apache.commons.math3.genetics.InvalidRepresentationException;
 
 public class PartitionChromosome extends AbstractListChromosome<Integer> {
-    public PartitionChromosome(Integer[] representation) {
+
+    private final PartitionFitness fitness;
+
+    public PartitionChromosome(Integer[] representation, PartitionFitness fitness) {
         super(representation);
         checkValidity(getRepresentation());
+        this.fitness = fitness;
     }
 
-    public PartitionChromosome(List<Integer> representation) {
+    public PartitionChromosome(List<Integer> representation, PartitionFitness fitness) {
         super(representation);
         checkValidity(representation);
+        this.fitness = fitness;
     }
 
     @Override
     public AbstractListChromosome<Integer> newFixedLengthChromosome(List<Integer> chromosomeRepresentation) {
-        return new PartitionChromosome(chromosomeRepresentation);
+        return new PartitionChromosome(chromosomeRepresentation, fitness);
     }
 
     /**
@@ -30,11 +35,11 @@ public class PartitionChromosome extends AbstractListChromosome<Integer> {
     }
 
     /**
-     * Default implementation always returns 0.
+     * Compute the fitness of the chromosome.
      */
     @Override
     public double fitness() {
-        return 0;
+        return fitness.fitness(getRepresentation());
     }
 
     /**
@@ -59,6 +64,13 @@ public class PartitionChromosome extends AbstractListChromosome<Integer> {
                 throw new IllegalArgumentException("Missing partitioon: " + i);
             }
         }
+    }
+
+    /**
+     * @return the fitness function
+     */
+    public PartitionFitness getFitnessFunction() {
+        return fitness;
     }
 
 }

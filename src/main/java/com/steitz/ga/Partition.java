@@ -13,7 +13,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Represents a partition of a set.
  * <p>
  * If universe is a set of elements, a partition of the universe is an indexed
- * list of subsets of the universe that do not overlap and whose union is the
+ * list of non-empty subsets of the universe that do not overlap and whose union
+ * is the
  * entire universe. So for example, if the universe is the set of integers from
  * 0 to 9, a partition of the universe might be the list of subsets
  * {0, 1, 2}, {3, 4, 5}, {6, 7, 8, 9}.
@@ -41,7 +42,7 @@ public class Partition {
     int m;
 
     /**
-     * the partition itself.
+     * The partition represented as an array of integers.
      * <p>
      * The partition is represented as an array of integers
      * where each integer is the index of the piece that the
@@ -73,6 +74,8 @@ public class Partition {
 
         // The number of pieces is one more than the maximum value in the partition
         // array. Values are 0, ..., m - 1.
+        //
+        // This value might be reduced if there are empty pieces.
         this.m = max + 1;
 
         // copy the input partition array
@@ -210,20 +213,19 @@ public class Partition {
             values.get(partition[i]).add(i);
         }
 
-        // Create a map of old partition values to new partition values
-        // Keys are old partition values and values are new partition values
-        final HashMap<Integer, Integer> collapsingMap = new HashMap<>();
+        // Create a map with keys equal to old piece numbers and values equal to new
+        final HashMap<Integer, Integer> pieceUpdateMap = new HashMap<>();
         final AtomicInteger nDistinct = new AtomicInteger(0);
         values.descendingKeySet().forEach((Integer key) -> {
-            collapsingMap.put(key, nDistinct.getAndIncrement());
+            pieceUpdateMap.put(key, nDistinct.getAndIncrement());
         });
 
         // update m - some pieces may have been removed
-        m = nDistinct.get();
+        m = numNonEmptyPieces;
 
         // Now go through the partition and replace old values with new values
         for (int i = 0; i < n; i++) {
-            newPartition[i] = collapsingMap.get(partition[i]);
+            newPartition[i] = pieceUpdateMap.get(partition[i]);
         }
 
         this.partition = newPartition;

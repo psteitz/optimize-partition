@@ -45,6 +45,17 @@
       <artifactId>commons-math3</artifactId>
       <version>3.6.1</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
+      <version>5.4.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mock-server</groupId>
+      <artifactId>mockserver-client-java</artifactId>
+      <version>5.15.0</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -89,6 +100,32 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.6.1</version>
         </plugin>
+        <plugin>
+          <groupId>org.mock-server</groupId>
+          <artifactId>mockserver-maven-plugin</artifactId>
+          <version>5.15.0</version>
+          <configuration>
+              <serverPort>1080</serverPort>
+              <logLevel>DEBUG</logLevel>
+              <initializationClass>org.mockserver.maven.ExampleInitializationClass</initializationClass>
+          </configuration>
+          <executions>
+              <execution>
+                  <id>process-test-classes</id>
+                  <phase>process-test-classes</phase>
+                  <goals>
+                      <goal>start</goal>
+                  </goals>
+              </execution>
+              <execution>
+                  <id>verify</id>
+                  <phase>verify</phase>
+                  <goals>
+                      <goal>stop</goal>
+                  </goals>
+              </execution>
+          </executions>
+       </plugin>
       </plugins>
     </pluginManagement>
   </build>

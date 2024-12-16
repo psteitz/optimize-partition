@@ -10,6 +10,15 @@ import org.apache.commons.math3.genetics.MutationPolicy;
 public class PartitionChromosomeMutation implements MutationPolicy {
 
     /**
+     * The fitness function used to evaluate the chromosome.
+     */
+    final PartitionFitness fitness;
+
+    public PartitionChromosomeMutation(PartitionFitness fitness) {
+        this.fitness = fitness;
+    }
+
+    /**
      * Mutate a PartitionChromosome by choosing a random index and replacing the
      * value at that index with a random value
      * in {0, ..., max} where max is the maximum value in the representation. Could
@@ -36,6 +45,6 @@ public class PartitionChromosomeMutation implements MutationPolicy {
         // Create a new partition so empty pieces can be removed
         final Partition partition = new Partition(representation);
         representation = partition.getRepresentation();
-        return new PartitionChromosome(representation);
+        return new PartitionChromosome(representation, fitness);
     }
 }

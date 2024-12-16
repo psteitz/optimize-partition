@@ -1,0 +1,94 @@
+\textbackslash{}documentclass[11pt,a4paper]\{report\}
+\textbackslash{}usepackage\{amsmath,amsfonts,amssymb,amsthm,epsfig,epstopdf,titling,url,array\}
+\textbackslash{}usepackage\{enumitem\}
+\textbackslash{}usepackage\{changepage\}
+\textbackslash{}usepackage\{graphicx\}
+\textbackslash{}usepackage\{caption\}
+\textbackslash{}usepackage\{listings\}
+\textbackslash{}usepackage\{color\}
+\textbackslash{}usepackage\{hyperref\}
+\textbackslash{}theoremstyle\{plain\}
+\textbackslash{}newtheorem\{thm\}\{Theorem\}[section]
+\textbackslash{}newtheorem\{lem\}[thm]\{Lemma\}
+\textbackslash{}newtheorem\{prop\}[thm]\{Proposition\}
+\textbackslash{}newtheorem*\{cor\}\{Corollary\}
+\textbackslash{}theoremstyle\{definition\}
+\textbackslash{}newtheorem\{defn\}\{Definition\}[section]
+\textbackslash{}newtheorem\{conj\}\{Conjecture\}[section]
+\textbackslash{}newtheorem\{exmp\}\{Example\}[section]
+\textbackslash{}newtheorem\{exercise\}\{Exercise\}[section]
+\textbackslash{}theoremstyle\{remark\}
+\textbackslash{}newtheorem*\{rem\}\{Remark\}
+\textbackslash{}newtheorem*\{note\}\{Note\}
+\textbackslash{}def\textbackslash{}changemargin\#1\#2\{\textbackslash{}list\{\}\{\textbackslash{}rightmargin\#2\textbackslash{}leftmargin\#1\}\textbackslash{}item[]\}
+\textbackslash{}let\textbackslash{}endchangemargin=\textbackslash{}endlist 
+
+\textbackslash{}definecolor\{codegreen\}\{rgb\}\{0,0.6,0\}
+\textbackslash{}definecolor\{codegray\}\{rgb\}\{0.5,0.5,0.5\}
+\textbackslash{}definecolor\{codepurple\}\{rgb\}\{0.58,0,0.82\}
+\textbackslash{}definecolor\{backcolour\}\{rgb\}\{0.95,0.95,0.92\}
+
+\textbackslash{}lstdefinestyle\{mystyle\}\{
+backgroundcolor=\textbackslash{}color\{backcolour\},   
+commentstyle=\textbackslash{}color\{codegreen\},
+keywordstyle=\textbackslash{}color\{magenta\},
+numberstyle=\textbackslash{}tiny\textbackslash{}color\{codegray\},
+stringstyle=\textbackslash{}color\{codepurple\},
+basicstyle=\textbackslash{}footnotesize,
+breakatwhitespace=false,         
+breaklines=true,                 
+captionpos=b,                    
+keepspaces=true,                 
+numbers=left,                    
+numbersep=5pt,                  
+showspaces=false,                
+showstringspaces=false,
+showtabs=false,                  
+tabsize=2
+\}
+
+\textbackslash{}lstset\{style=mystyle\}
+\textbackslash{}begin\{document\}
+
+\textbackslash{}section*\{Problem 1\}
+(a) Find a positive integer that has exactly 237 proper factors.  An integer \$m\$ is proper factor of another integer \$n\$ if \$1 < m < n\$ and \$n = m \textbackslash{}times k\$ for some positive integer \$k\$.  So for example, \$12\$ has proper factors \$2,3,4\$ and \$6\$.
+\textbackslash{}\textbackslash{} \textbackslash{}\textbackslash{}
+\textbackslash{}emph\{Solution:\}  \$2\^{}\{238\}\$ is one such number.  Its proper factors are \$2, 2\^{}2, 2\^{}3, ..., 2\^{}\{237\}\$.  Because \$2\$ is prime, there is no way to make more distinct proper factors by combining the powers of \$2\$ that \$2\^{}\{238\}\$ contains.
+\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}
+(b) Show that for every \$n\$ there are infinitely many integers with exactly \$n\$ proper factors.
+\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}
+\textbackslash{}emph\{Solution:\} First, there is an error in the statement of the problem (noted by Dave Jacobson).  It should be stated that \$n\$ must be greater than 0.  The method applied in part (a) can be used to get a number with exactly \$n\$ proper factors for any \$n > 0\$.  Note that any prime can be used in place of \$2\$.  This gives infinitely many different numbers with the property because there are infiinitely many primes.  These are all unique by the uniqueness of prime factorization.
+
+\textbackslash{}section*\{Problem 2\}
+Find a sequence of real numbers from the interval \$[0,1]\$ that has subsequences converging to infinitely many different values.   For example, the secuence \$\textbackslash{}\{1/3, 0.2 + 1/3, 1/4, 0.2 + 1/4, 1/5, 0.2 + 1/5 ...\textbackslash{}\}\$ has two convergent subsequences, the first, consisting of the even numbered terms, converges to \$0\$ and the one made up of the odd-numbered terms converges to \$0.2\$
+\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}
+\textbackslash{}emph\{Solution:\} (Ava Ma) Consider the sequence \$\$\textbackslash{}\{1, 1, 1/2, 1, 1/2, 1/3, 1, 1/2, 1/3, 1/4, 1, 1/2, 1/3, 1/4, 1/5...\textbackslash{}\}\$\$ This sequence contains infinitely many terms equal to each of  the terms in the arithmentic sequence \$\textbackslash{}\{1, 1/2, 1/3, 1/4...\textbackslash{}\}\$.  Each of these is a convergent  subsequence with a distinct limit.
+
+\textbackslash{}pagebreak
+
+\textbackslash{}section*\{Problem 3\}  
+Consider the following strategy for betting at Roulette, assuming an American-style table with two slots out of 38 that are neither red nor black.  The gambler decides to start with a \$\textbackslash{}\$1\$ bet on red.  If he wins, that ends the sequence.  If he loses, he doubles the bet size for the next trial and continues in this way until red comes up and he wins or he runs out of money or hits the table limit.   Find a formula for the gambler's gain (how much he wins minus how much he loses)  as a function of the number of attempts it takes him to win.
+\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}
+\textbackslash{}emph\{Solution:\}  A \textbackslash{}emph\{geometric random variable\} is a variable whose values are the number of trials it takes to get a success when a random experiment with two outcomes - success and failure - is performed repeatedly, with the assumption that successive trials are independent.    If \$X\$ is a geometric random variable with probability of success on a single trial equal to \$p\$, then \$X\$ can take any of the values \$1, 2, 3, ... \$ i.e., there is no upper bound to the value that \$X\$ can take.  For each positive integer \$i\$, 
+\$\$P(X = i) = (1-p)\^{}\{i-1\} p\$\$
+To see why this is true, since the trials are independent, the probability that all of the first \$i-1\$ trials are failures is just the failure probability multiplied by itself \$i-1\$ times and the probability that this happens followed by a success is that we have above.  The number of bets that the gambler in our problem will make is a geometric random variable with \$p = 18/38  \textbackslash{}simeq 0.47\$.
+Using the formula above, we can compute the probability distribution of the gambler's gain:
+\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}
+\textbackslash{}begin\{tabular\}\{c c c c\}
+Number of bets\&Probability\&\$\textbackslash{}\$\$ lost \&\$\textbackslash{}\$\$ won\textbackslash{}\textbackslash{}\textbackslash{}hline
+1\&\$.47\$\&\$\textbackslash{}\$0\$\&\$\textbackslash{}\$1\$\textbackslash{}\textbackslash{}
+2\&\$.249\$\&\$\textbackslash{}\$1\$\&\$\textbackslash{}\$2\$\textbackslash{}\textbackslash{}
+3\&\$.132\$\&\$\textbackslash{}\$3\$\&\$\textbackslash{}\$4\$\textbackslash{}\textbackslash{}
+...\&...\&...\&\textbackslash{}\textbackslash{}
+10\&\$.00155\$\&\$\textbackslash{}\$511\$\&\$\textbackslash{}\$512\$\textbackslash{}\textbackslash{}
+...\&...\&...\&...\textbackslash{}\textbackslash{}
+20\&\$2.71 \textbackslash{}times 10\^{}\{-6\}\$\&\$\textbackslash{}\$524,287\$\&\$\textbackslash{}\$524,288\$\textbackslash{}\textbackslash{}
+...\&...\&...\& ...\textbackslash{}
+\textbackslash{}end\{tabular\}
+\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}
+So the gambler always ends up walking away ahead by \$\textbackslash{}\$1\$.  This is because \$\textbackslash{}sum\_\{i=0\}\^{}\{n - 1\} \{2\^{}i\} = 2\^{}\{n\} - 1.\$ This can be proven by mathematical induction using the identity \$1 + 2 + 2\^{}2 + ... + 2\^{}n = 1 + 2(1 + 2 + ... + 2\^{}\{n-1\})\$. 
+\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}
+It is interesting to note here that the result of always walking away \$\textbackslash{}\$1\$ ahead does not depend on the probability of success on a single bet (in the Red/Black Roulette case, \$.47\$).  Decreasing the probability of success just ends up increasing the probability that more bets will be needed to get a success.  The problem with this strategy is that no matter what bound you put on the number of bets (the table limit or how much you are willing to wager), there is a non-zero probability that you will end up going beyond that and losing a big pile of \textbackslash{}\$.  The house will be happy to get that big pile and as long as the probability of success on a single trial is less than \$0.5\$ across all betting strategies, the house will prosper and while it may take a while for an individual using the ``double down" strategy to hit the limit, it will eventually happen and over time the house will win.
+
+
+\textbackslash{}section*\{Problem 4\}
