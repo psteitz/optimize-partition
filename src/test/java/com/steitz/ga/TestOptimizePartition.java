@@ -66,10 +66,12 @@ public class TestOptimizePartition {
 
         // initial population
         Population initial = getInitialPopulation();
+        System.out.println("Generated initial population");
 
         // stopping condition
         StoppingCondition stopCond = new FixedGenerationCount(NUM_GENERATIONS);
 
+        System.out.println("Running genetic algorithm");
         // run the algorithm
         Population finalPopulation = ga.evolve(initial, stopCond);
 

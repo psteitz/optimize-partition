@@ -2,29 +2,34 @@
 package com.steitz.ga;
 
 import java.util.List;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.apache.commons.math3.genetics.AbstractListChromosome;
 import org.apache.commons.math3.genetics.InvalidRepresentationException;
 
 public class PartitionChromosome extends AbstractListChromosome<Integer> {
 
-    private final PartitionFitness fitness;
+    private final PartitionFitness fitnessFunction;
+
+    private double cachedFitness = Double.NaN;
+
+    private ReentrantReadWriteLock fitnessLock = new ReentrantReadWriteLock();
 
     public PartitionChromosome(Integer[] representation, PartitionFitness fitness) {
         super(representation);
         checkValidity(getRepresentation());
-        this.fitness = fitness;
+        this.fitnessFunction = fitness;
     }
 
     public PartitionChromosome(List<Integer> representation, PartitionFitness fitness) {
         super(representation);
         checkValidity(representation);
-        this.fitness = fitness;
+        this.fitnessFunction = fitness;
     }
 
     @Override
     public AbstractListChromosome<Integer> newFixedLengthChromosome(List<Integer> chromosomeRepresentation) {
-        return new PartitionChromosome(chromosomeRepresentation, fitness);
+        return new PartitionChromosome(chromosomeRepresentation, fitnessFunction);
     }
 
     /**
@@ -39,7 +44,26 @@ public class PartitionChromosome extends AbstractListChromosome<Integer> {
      */
     @Override
     public double fitness() {
-        return fitness.fitness(getRepresentation());
+        // Use a read lock to check if the fitness is already computed.
+        double result = Double.NaN;
+        fitnessLock.readLock().lock();
+        if (!Double.isNaN(cachedFitness)) {
+            result = cachedFitness;
+            fitnessLock.readLock().unlock();
+        } else {
+            // Upgrade to a write lock to compute the fitness.
+            fitnessLock.readLock().unlock();
+            fitnessLock.writeLock().lock();
+            try {
+                if (Double.isNaN(cachedFitness)) {
+                    cachedFitness = fitnessFunction.fitness(getRepresentation());
+                }
+                result = cachedFitness;
+            } finally {
+                fitnessLock.writeLock().unlock();
+            }
+        }
+        return result;
     }
 
     /**
@@ -70,7 +94,7 @@ public class PartitionChromosome extends AbstractListChromosome<Integer> {
      * @return the fitness function
      */
     public PartitionFitness getFitnessFunction() {
-        return fitness;
+        return fitnessFunction;
     }
 
 }

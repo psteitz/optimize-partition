@@ -14,10 +14,10 @@ public class CmdPartitionFitness implements PartitionFitness {
     /**
      * Maximum number of history entries.
      */
-    protected static final int HISTORY_SIZE = 10;
+    protected static final int HISTORY_SIZE = 1000;
 
     /**
-     * History of fitness <args, fitness> pairs where fitness is what is rturned by
+     * History of fitness <args, fitness> pairs where fitness is what is returned by
      * command "args"
      */
     protected final Map<String, Double> history = new HashMap<String, Double>();
@@ -44,6 +44,11 @@ public class CmdPartitionFitness implements PartitionFitness {
 
         // Strip [ and ] from toString output and replace commas with spaces
         final String args = partition.toString().replaceAll("[\\[\\]]", "").replaceAll(",", " ");
+
+        // See if we have the value in cache. If so, return it.
+        if (history.containsKey(command + " " + '"' + args + '"')) {
+            return history.get(command + " " + '"' + args + '"');
+        }
 
         final Process process;
         final StringBuilder output = new StringBuilder();

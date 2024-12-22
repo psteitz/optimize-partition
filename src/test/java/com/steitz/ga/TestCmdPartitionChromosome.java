@@ -56,7 +56,7 @@ public class TestCmdPartitionChromosome {
 
     @Test
     public void testOptimizeCmdPartitionHighestSum() {
-        System.out.println("Generating initial population");
+        System.out.println("Starting..");
 
         // Set the tournament arity - the number of chromosomes to include in each
         // population
@@ -76,11 +76,14 @@ public class TestCmdPartitionChromosome {
                 new TournamentSelection(TOURNAMENT_ARITY));
 
         // initial population
+        System.out.println("Generating initial population");
         Population initial = getInitialPopulation(SUM_COMMAND);
+        System.out.println("Generated initial population");
 
         // stopping condition
         StoppingCondition stopCond = new FixedGenerationCount(NUM_GENERATIONS);
 
+        System.out.println("Running genetic algorithm");
         // run the algorithm
         Population finalPopulation = ga.evolve(initial, stopCond);
 
@@ -96,7 +99,7 @@ public class TestCmdPartitionChromosome {
     @Test
     public void testOptimizeCmdPartitionNegSum() {
         // Reset command to min.sh - shell script that returns -1 * sum of its arguments
-        System.out.println("Generating initial population");
+        System.out.println("Starting");
 
         // Set the tournament arity - the number of chromosomes to include in each
         // population
@@ -116,7 +119,9 @@ public class TestCmdPartitionChromosome {
                 new TournamentSelection(TOURNAMENT_ARITY));
 
         // initial population
+        System.out.println("Generating initial population");
         Population initial = getInitialPopulation(NEG_SUM_COMMAND);
+        System.out.println("Initial population generated");
 
         // stopping condition
         StoppingCondition stopCond = new FixedGenerationCount(NUM_GENERATIONS);

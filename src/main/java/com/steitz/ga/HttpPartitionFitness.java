@@ -8,7 +8,6 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.HttpEntity;
-import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
 
 public class HttpPartitionFitness implements PartitionFitness {
@@ -34,8 +33,10 @@ public class HttpPartitionFitness implements PartitionFitness {
     }
 
     /**
-     * Compute fitness by executing command in a bash shell with the partition as
-     * csv list as argument.
+     * Compute fitness by sending a "GET" request to url with the partition as
+     * query string parameter. partition parameter is sent as a comma separated list
+     * of
+     * integers, surrounded by square brackets. For example, "[0, 1, 2]".
      */
     @Override
     public double fitness(List<Integer> partition) {
