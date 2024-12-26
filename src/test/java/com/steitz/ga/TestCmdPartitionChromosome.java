@@ -91,7 +91,7 @@ public class TestCmdPartitionChromosome {
         Chromosome bestFinal = finalPopulation.getFittestChromosome();
         // The highest possible fitness comes from [0,1,2,3,4,5,6,7,8,9,,,,,,9]
         // Length 100, sums to 36 + 9 * 91 = 855
-        System.out.println(fitness.dumpHistory());
+        System.out.println(fitness.dumpFitnessCache());
         System.out.println("Best fitness: " + bestFinal.fitness());
         assertTrue(bestFinal.fitness() > 850.0);
     }
@@ -133,7 +133,7 @@ public class TestCmdPartitionChromosome {
         Chromosome bestFinal = finalPopulation.getFittestChromosome();
         // The highest possible fitness comes from [0,...,0]
         // Length 100, sums to 0
-        System.out.println(fitness.dumpHistory());
+        System.out.println(fitness.dumpFitnessCache());
         System.out.println("Best fitness: " + bestFinal.fitness());
         assertTrue(bestFinal.fitness() > -10);
     }

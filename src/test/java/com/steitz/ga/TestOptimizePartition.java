@@ -12,10 +12,9 @@ import org.apache.commons.math3.genetics.TournamentSelection;
 import org.junit.jupiter.api.Test;
 
 /**
- * Optimize an objective function defined over partitons of a set.
- * <p>
- * Goal is to find the partition that maximizes the objective function.
- * Uses Genetic Algorithm to search for the optimal partition.
+ * Tests partition optimization with some example fitness functions.
+ * 
+ * First returns the sum of the partition.
  */
 public class TestOptimizePartition {
 
@@ -45,6 +44,36 @@ public class TestOptimizePartition {
         return out;
     }
 
+    /**
+     * Test optimizing a partition for the following fitness function:
+     * 
+     * Suppose that the universe is the set {u_0, u_1, ..., u_n} where each u_i is
+     * a double and all are distict. So n is the size of the universe.
+     * 
+     * Define the fitness of a partition to be the sum of the maximum u_i value in
+     * each partition piece.
+     * 
+     * Let p_0, ..., p_{m-1} be the pieces of the partition. So their union is the
+     * universe and m is the number of pieces defined by the partition. For each
+     * piece p_i, let m_i be the maximum value among universe
+     * elements in p_i.
+     * 
+     * Return m_0 + m_1 + ... + m_{m-1}.
+     * 
+     * So for example, if the partition is
+     * 
+     * {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {9, 10, 11}, {12, 13, 14}
+     * 
+     * and the values are
+     * 
+     * {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14},
+     * 
+     * then the fitness of the partition is
+     * 
+     * 2 + 5 + 8 + 11 + 14 = 40.
+     * 
+     * @see MaxValuePartitionChromosome.MaxValuePartitionFitness
+     */
     @Test
     public void testOptimizeMaxValuePartition() {
         System.out.println("Generating initial population");
