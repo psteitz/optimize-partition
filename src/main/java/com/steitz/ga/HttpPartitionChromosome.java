@@ -4,9 +4,6 @@ import java.util.List;
 
 public class HttpPartitionChromosome extends PartitionChromosome {
 
-    // destination for POST request
-    private final String url;
-
     /**
      * Create a new HttpPartitionChromosome with the given partition representation.
      * and command.
@@ -17,7 +14,6 @@ public class HttpPartitionChromosome extends PartitionChromosome {
      */
     public HttpPartitionChromosome(List<Integer> representation, String url) {
         super(representation, new HttpPartitionFitness(url));
-        this.url = url;
     }
 
     /***
@@ -28,7 +24,6 @@ public class HttpPartitionChromosome extends PartitionChromosome {
      */
     public HttpPartitionChromosome(Integer[] representation, String url) {
         super(representation, new HttpPartitionFitness(url));
-        this.url = url;
     }
 
 }

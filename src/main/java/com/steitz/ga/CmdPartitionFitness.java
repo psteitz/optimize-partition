@@ -2,31 +2,36 @@ package com.steitz.ga;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Calculate the fitness of a partition by executing a command in a bash shell
  * with the partition as csv list as argument.
+ * 
+ * The command should return string representation of double that is the fitness
+ * of the partition.
+ * 
+ * Maintains a cache of computed fitness values
  */
 public class CmdPartitionFitness implements PartitionFitness {
     /**
-     * Maximum number of history entries.
+     * Cache size for fitness history
      */
-    protected static final int HISTORY_SIZE = 1000;
+    protected static final int FITNESS_CACHE_SIZE = 10000;
 
     /**
-     * History of fitness <args, fitness> pairs where fitness is what is returned by
-     * command "args"
+     * Cache of fitness <args, fitness> pairs where fitness is what is returned by
+     * `command "args"`
      */
-    protected final Map<String, Double> history = new HashMap<String, Double>();
+    protected final Map<String, Double> fitnessCache = new ConcurrentHashMap<>();
 
     // Command to execute
     private final String command;
 
     /**
-     * Create a new CmdPartitionFitness with the given command.
+     * History
      */
     public CmdPartitionFitness(String command) {
         this.command = command;
@@ -35,29 +40,43 @@ public class CmdPartitionFitness implements PartitionFitness {
     /**
      * Compute fitness by executing command in a bash shell with the partition as
      * csv list as argument.
+     * 
+     * Forks an OS process to execute command with partition as quoted command line
+     * argument.
+     * 
+     * @param partition partition to calculate fitness of
+     * @return fitness of partition
      */
     @Override
     public double fitness(List<Integer> partition) {
         // Execute command in a bash shell with space delimited list of values in
         // partiton as command line arguments.
+        //
         // Parse the shell output as a double and return it.
 
         // Strip [ and ] from toString output and replace commas with spaces
         final String args = partition.toString().replaceAll("[\\[\\]]", "").replaceAll(",", " ");
 
         // See if we have the value in cache. If so, return it.
-        if (history.containsKey(command + " " + '"' + args + '"')) {
-            return history.get(command + " " + '"' + args + '"');
+        final Double getCached = fitnessCache.get(command + " " + '"' + args + '"');
+        if (getCached != null) {
+            return getCached;
         }
 
+        // Execute command in a bash shell with space delimited list of partition values
+        // as command-line arguments.
+        //
+        // Capture the output of the command and parse it as a double.
+
+        // OS process
         final Process process;
+        // Output of the process
         final StringBuilder output = new StringBuilder();
 
-        // Execute command in a bash shell with space delimited list of partition values
-        // as command-line arguments
-        // Capture the output of the command and parse it as a double.
         try {
+            /// Get OS process for command with args
             process = Runtime.getRuntime().exec(command + " " + args);
+            // Read command output into output
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -71,24 +90,31 @@ public class CmdPartitionFitness implements PartitionFitness {
         }
         double ret;
         try {
+            // output should be a double
             ret = Double.parseDouble(output.toString());
         } catch (NumberFormatException e) {
-            System.out.println(dumpHistory());
+            System.out.println(dumpFitnessCache());
             e.printStackTrace();
             throw new RuntimeException("Failed to parse output as double: " + output.toString());
         }
-        if (history.size() == HISTORY_SIZE) {
-            // Remove the oldest entry
-            history.remove(history.keySet().iterator().next());
+        if (fitnessCache.size() == FITNESS_CACHE_SIZE) {
+            // Remove the oldest entry in the fitness cache
+            fitnessCache.remove(fitnessCache.keySet().iterator().next());
         }
-        // Update history with new activation reccord
-        history.put(command + " " + '"' + args + '"', ret);
+        // Update fitness cache with new activation reccord
+        fitnessCache.put(command + " " + '"' + args + '"', ret);
         return ret;
     }
 
-    public String dumpHistory() {
+    /**
+     * Dump the fitness cache to a string with one entry per line.
+     * Entries are of the form "partition -> fitness"
+     * where fitness is a double and partition is a comma separated list of integers
+     * surrounded by square brackets.
+     */
+    public String dumpFitnessCache() {
         final StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, Double> entry : history.entrySet()) {
+        for (Map.Entry<String, Double> entry : fitnessCache.entrySet()) {
             sb.append(entry.getKey()).append(" -> ").append(entry.getValue()).append("\n");
         }
         return sb.toString();

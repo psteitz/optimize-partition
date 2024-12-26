@@ -57,12 +57,15 @@ public class PartitionChromosome extends AbstractListChromosome<Integer> {
             try {
                 if (Double.isNaN(cachedFitness)) {
                     cachedFitness = fitnessFunction.fitness(getRepresentation());
+                    // System.out.println("representation " + getRepresentation());
+                    // System.out.println("computed fitness " + cachedFitness);
                 }
                 result = cachedFitness;
             } finally {
                 fitnessLock.writeLock().unlock();
             }
         }
+        // System.out.println("Returning fitness: " + result);
         return result;
     }
 
