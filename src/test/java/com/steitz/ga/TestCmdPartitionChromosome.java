@@ -45,7 +45,7 @@ public class TestCmdPartitionChromosome {
             chromosomes[i] = new CmdPartitionChromosome(representation, command);
         }
 
-        final Population out = new ElitisticListPopulation(chromosomes.length, 0.1);
+        final Population out = new ElitisticListPopulation(POPULATION_SIZE, 0.1);
 
         for (PartitionChromosome chromosome : chromosomes) {
             out.addChromosome(chromosome);
@@ -56,7 +56,12 @@ public class TestCmdPartitionChromosome {
 
     @Test
     public void testOptimizeCmdPartitionHighestSum() {
-        System.out.println("Starting..");
+        // Skip for windows
+        if (System.getProperty("os.name").contains("indows")) {
+            System.out.println(System.getProperty("os.name"));
+            return;
+        }
+        System.out.println("Starting...");
 
         // Set the tournament arity - the number of chromosomes to include in each
         // population
@@ -98,6 +103,10 @@ public class TestCmdPartitionChromosome {
 
     @Test
     public void testOptimizeCmdPartitionNegSum() {
+        if (System.getProperty("os.name").contains("indows")) {
+            System.out.println(System.getProperty("os.name"));
+            return;
+        }
         // Reset command to min.sh - shell script that returns -1 * sum of its arguments
         System.out.println("Starting");
 

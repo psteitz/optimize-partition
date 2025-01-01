@@ -1,7 +1,3 @@
-/**
- * Fitness function that 
- */
-
 package com.steitz.ga;
 
 import java.util.List;
