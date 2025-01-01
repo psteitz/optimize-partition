@@ -16,7 +16,7 @@ This partition is represented by the array $[0,0,1,1,2,2]$.
 ## Main Features
 
 ## Dependencies
-optimize-partition uses the Java implementation of the genetic algorithm provided by Apache Commons Math
+optimize-partition depends on Apache Commons Math, version 3.6.1
 
 ## Documentation
 
