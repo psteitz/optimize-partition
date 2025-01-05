@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.commons.math3.genetics.Chromosome;
@@ -86,6 +87,9 @@ public class TestClusterPartitionChromosome {
         // Set the number of generations to run the genetic algorithm
         final int NUM_GENERATIONS = 100;
 
+        // universe is 5 random centroids at least 10 units apart followed by consecutive blocks of clustersize
+        // deviates around the five centroids in sequence.  So universe[5], ..., universe[14] are deviates
+        // around universe[0], etc
         final double[][] universe = clusteredUniverse(10,5,10,.1,DIMENSION);
 
         final ClusterPartitionFitness fitness = new ClusterPartitionFitness(DIMENSION, universe);
@@ -117,6 +121,38 @@ public class TestClusterPartitionChromosome {
         // Neighboring clusters are at least 10 away, so one wrong placement will cause this to fail.
         System.out.println("Best fitness: " + bestFinal.fitness());
         assertTrue(bestFinal.fitness() > -27);
+        System.out.println("Best Partition:");
+        System.out.println(bestFinal);
+
+        // Verify that bestFinal has first five values different - separates the centroids
+        final List<Integer> bestList = ((PartitionChromosome) bestFinal).getRepresentation();
+        final HashSet<Integer> centroids = new HashSet<>();
+        for (int i = 0; i < 5; i++) {
+            centroids.add(bestList.get(i));
+        }
+        assertEquals(centroids.size(), 5);
+
+        // FIXME: change to constants.  These are clusteredUniverse parms.
+        final int numClusters = 5;
+        final int clusterSize = 10;
+ 
+        // Following the centroids in universe[] are blocks of clusterSize - 1 deviates around each centroid in sequence.
+        // So after the 5th element, bestList should be sequences of identical integer values of length clusterSize.
+        // Something like this:
+        //   4, 2, 0, 1, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+        // Best fitness: -11.559283605643632
+        int offset = 5; // offset into bestList
+        for (int i = 0; i < numClusters; i++) {
+            System.out.println("Looking at cluster " + i);
+            final HashSet<Integer> values = new HashSet<>();
+            for (int j = 0; j < clusterSize - 1; j++) {
+                final int nextValue = bestList.get(offset + (i * (clusterSize - 1)) + j);
+                System.out.println("Adding " + nextValue);
+                values.add(nextValue);
+            }
+            assertEquals(1, values.size());
+        }
+
         System.out.println(bestFinal);
     }
 

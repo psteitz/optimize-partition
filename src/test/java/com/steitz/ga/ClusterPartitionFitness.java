@@ -38,10 +38,7 @@ public class ClusterPartitionFitness implements PartitionFitness {
      */
     @Override
     public double fitness(List<Integer> partition) {
-        // Elements are the universe elements.  Each is dimension-dimensional array.
-        // First index is piece, second is universe index of element in piece
-        // Final dimension is double values of vector components
-
+        
         // Pieces is a map keyed on partition piece number with value a set of indexes
         // of elements in the piece.
         final Map<Integer,Set<Integer>> pieces = getPieces(partition);
