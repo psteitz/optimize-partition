@@ -2,6 +2,7 @@ package com.steitz.ga;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -92,6 +93,8 @@ public class TestClusterPartitionChromosome {
         // around universe[0], etc
         final double[][] universe = clusteredUniverse(10,5,10,.1,DIMENSION);
 
+        dumpUniverseDistanceMetrics(universe, 5);
+
         final ClusterPartitionFitness fitness = new ClusterPartitionFitness(DIMENSION, universe);
 
         // initialize a new genetic algorithm
@@ -120,7 +123,14 @@ public class TestClusterPartitionChromosome {
         // Cluster size is 10, so (10 choose 2) * .6 = 27 should never be exceeded.
         // Neighboring clusters are at least 10 away, so one wrong placement will cause this to fail.
         System.out.println("Best fitness: " + bestFinal.fitness());
-        assertTrue(bestFinal.fitness() > -27);
+        if (bestFinal.fitness() < -27) {
+            System.out.println("Failing.  Solution fitness too low.");
+            System.out.println("Universe");
+            dumpUniverse(universe);
+            System.out.println("Best partition found");
+            System.out.println(bestFinal);
+            fail();
+        }
         System.out.println("Best Partition:");
         System.out.println(bestFinal);
 
@@ -255,11 +265,63 @@ public class TestClusterPartitionChromosome {
         return out;
     }
 
-    @Test 
-    public void testClusteredUniverse() {
-        final double[][] universe = clusteredUniverse(10,5,10,1,3);
+    
+    private void dumpUniverse(double[][] universe) {
         for (int i = 0; i < 50; i++) {
             System.out.println(Arrays.toString(universe[i]));
         }
+    }
+
+    /**
+     * Displays the closest centroids and the closest pair of deviates from different blocks.
+     * 
+     * @param universe
+     * @param numCentroids
+     */
+    private void dumpUniverseDistanceMetrics(double[][] universe, int numCentroids) {
+        // First find smallest distance between centroids
+        double closest = Double.MAX_VALUE;
+        int bestI = 0;
+        int bestJ = 0;
+        for (int i = 0; i < numCentroids; i++) {
+            for (int j = 0; j < i; j++) {
+                double curDist = MathArrays.distance(universe[i], universe[j]);
+                if (curDist < closest) {
+                    closest = curDist;
+                    bestI = i;
+                    bestJ = j;
+                }
+            }
+        }
+        System.out.println("Closest centroids are");
+        System.out.println(Arrays.toString(universe[bestI]));
+        System.out.println(Arrays.toString(universe[bestJ]));
+        System.out.println("These two are " + closest + " units  apart.");
+
+        // Now find the smallest inter-cluster distance
+        // Assume universe has centroids first, followed by blocks of deviates
+        int blockSize = (universe.length - numCentroids) / numCentroids;
+        System.out.println("Deviate blocksize: " + blockSize);
+        int blockStart = numCentroids;
+        closest = Double.MAX_VALUE;
+        for (int i = 0; i < numCentroids; i++) {
+            for (int j = 0; j < blockSize; j++) {
+                double[] ref = universe[blockStart + j];
+                // Compare to deviates in other blocks below it
+                for (int k = numCentroids; k < blockStart; k++) {
+                    double curDist = MathArrays.distance(ref, universe[k]);
+                    if (curDist < closest) {
+                        closest = curDist;
+                        bestI = blockStart + j;
+                        bestJ = k;
+                    }         
+                }
+            }
+            blockStart += blockSize;
+        }
+        System.out.println("Closest deviates are");
+        System.out.println(Arrays.toString(universe[bestI]));
+        System.out.println(Arrays.toString(universe[bestJ]));
+        System.out.println("These two are " + closest + " units  apart.");
     }
 }
