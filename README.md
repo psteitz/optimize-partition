@@ -60,6 +60,9 @@ Set the universe to the centroids, followed by the deviate blocks in order by ce
 
 Set the objective function to be the sum of the squared pairwise euclidean distances between universe elements in the same partition piece.
 
+#### Implementation
+https://github.com/psteitz/optimize-partition/blob/main/src/test/java/com/steitz/ga/TestClusterPartitionChromosome.java
+
     
 
 
