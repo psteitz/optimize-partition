@@ -48,6 +48,19 @@ Test classes provide examples for how to do each of these
 optimize-partition depends on Apache Commons Math, version 3.6.1
 
 ## Experiments
+### Clustering
+ 1. Start with a universe of length 3 real vectors generated as follows.
+    * Generate 5 random vectors making sure that no two of them are closer than 10 units apart.
+      These will be the centroids of the clusters in the optimal partition.
+    * For each centroid, generate 9 nearby points with gaussian component differences from the centroid.
+      Make the standard deviation of the gaussian noise 0.1, so the deviates genearated around a centroid remain
+      comparatively much closer to the centroid than to any neighboring centroid or any of its deviates.
+    
+Set the universe to the centroids, followed by the deviate blocks in order by centroid.
+
+Set the objective function to be the sum of the squared pairwise euclidean distances between universe elements in the same partition piece.
+
+    
 
 
 
