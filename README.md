@@ -7,7 +7,7 @@ Optimize-partition is a micro-framework for optimizing objective functions defin
 The problem solved here is finding good partitions of a set given an objective function defined over partitions of the set.
 The Genetic Algorithm is used to direct the search for partitions with high values of the objective function.
 
-Suppose that you have a universal set $U$ and you are trying to find the best partition of $U$ under the partition fitness function $f$. Write $U = \\{u_0, ,,, u_{n-1}\\}$ where $n$ is the size of the universe.  Then a *partition* $p$ of $U$ is a collection of subsets of $U$ that are non-empty, collectively exhaustive of $u$, and mutually exclusive. We call the subsets in $p$ the *pieces* in the partition.  Partitions can be represented using integer arrays of length $n$, where for each $i$, $p[i]$ is the partition piece that $u_i$ belongs to.  
+Suppose that you have a universal set $U$ and you are trying to find the best partition of $U$ under the partition fitness function $f$. Write $U = \\{u_0, ,,, u_{n-1}\\}$ where $n$ is the size of the universe.  Then a *partition* $p$ of $U$ is a collection of subsets of $U$ that are non-empty, collectively exhaustive of $U$, and mutually exclusive. We call the subsets in $p$ the *pieces* in the partition.  Partitions can be represented using integer arrays of length $n$, where for each $i$, $p[i]$ is the partition piece that $u_i$ belongs to.  
 
 For example, suppose that $U = \\{0,1,2,3,4,5\\}$.  Consider the partition $p = \\{\\{0,1\\}, \\{2,3\\}, \\{4,5\\}\\}$ of $U$.
 This partition is represented by the array $[0,0,1,1,2,2]$.
