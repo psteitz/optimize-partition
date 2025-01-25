@@ -55,13 +55,19 @@ optimize-partition depends on Apache Commons Math, version 3.6.1
     * For each centroid, generate 9 nearby points with gaussian component differences from the centroid.
       Make the standard deviation of the gaussian noise 0.1, so the deviates genearated around a centroid remain
       comparatively much closer to the centroid than to any neighboring centroid or any of its deviates.
-    
-Set the universe to the centroids, followed by the deviate blocks in order by centroid.
+      
+2. Set the universe to the centroids, followed by the deviate blocks in order by centroid.
 
-Set the objective function to be the sum of the squared pairwise euclidean distances between universe elements in the same partition piece.
+3. Set the objective function to be the sum of the squared pairwise euclidean distances between universe elements in the same partition piece.
+
+4. Run the Genetic Algorithm starting with a random population of partitions with fitness defined by the objective function in 3. and verify that after 100 generations the fittest partition is the correct one (centroids and their deviates in each of 5 pieces).
+
+Optimizing this objective function is the same as performing k-means clustering over the universe with $k=5$
 
 #### Implementation
-https://github.com/psteitz/optimize-partition/blob/main/src/test/java/com/steitz/ga/TestClusterPartitionChromosome.java
+The ```testClusterPartitionChromosomeClusteredUniverse``` case in
+https://github.com/psteitz/optimize-partition/blob/main/src/test/java/com/steitz/ga/TestClusterPartitionChromosome.java 
+does 1-3 above and verifies that after
 
     
 
