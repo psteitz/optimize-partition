@@ -25,8 +25,8 @@ Then we apply the Genetic Algorithm with
   recoded to $[0,0,1]$.
 * The order of the pieces is significant in our representation, but set-theortically it is not.  For 
   example,  $[0,0,1,1,2,2]$,  $[1,1,0,0,2,2]$ and $[2,2,1,1,0,0]$ all represent the same partition set-theoretically, but the three
-  chromosomes are different.  All have the same fitness. Each partion $p$ has $|p|!$ chromosome representations, where $|p|$ is the number
-  of pieces in $p$.
+  chromosomes are different.  All have the same fitness. Each partion $p$ has $\left|{p}\right|{!}$ chromosome representations,
+  where $\left|{p}\right|$ is the number of pieces in $p$.
 
 ## Usage
 
