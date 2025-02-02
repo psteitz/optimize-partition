@@ -68,13 +68,7 @@ public class HttpPartitionFitness implements PartitionFitness {
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             ClassicHttpRequest httpGet = ClassicRequestBuilder
                     .get(baseUrl + encodedPartition).build();
-            System.out.println("Partition fitness request sent to " + httpGet.getUri());
-            System.out.println("Method: " + httpGet.getMethod());
-            System.out.println("Encoded partition: " + encodedPartition);
             httpclient.execute(httpGet, response -> {
-                System.out.println(response.getCode() + " " + response.getReasonPhrase());
-                System.out.println(response.getHeaders());
-                System.out.println(response.getEntity());
                 final InputStream contentStream = response.getEntity().getContent();
                 // Serialize the response content into a string
                 final StringBuilder sb = new StringBuilder();
@@ -83,14 +77,11 @@ public class HttpPartitionFitness implements PartitionFitness {
                     sb.append((char) c);
                 }
                 contentStream.close();
-                System.out.println("Response content: " + Double.parseDouble(sb.toString()));
                 // Parse the response content as a double and set the result
                 result.set(Double.parseDouble(sb.toString()));
                 return response;
             });
         } catch (Exception e) {
-            System.out.println(baseUrl);
-            System.out.println(encodedPartition);
             throw new RuntimeException(e);
         }
         return result.get();

@@ -153,11 +153,9 @@ public class TestClusterPartitionChromosome {
         // Best fitness: -11.559283605643632
         int offset = 5; // offset into bestList
         for (int i = 0; i < numClusters; i++) {
-            System.out.println("Looking at cluster " + i);
             final HashSet<Integer> values = new HashSet<>();
             for (int j = 0; j < clusterSize - 1; j++) {
                 final int nextValue = bestList.get(offset + (i * (clusterSize - 1)) + j);
-                System.out.println("Adding " + nextValue);
                 values.add(nextValue);
             }
             assertEquals(1, values.size());

@@ -73,8 +73,6 @@ public class TestHttpPartitionChromosome {
         // Return the sum of the partition as the response body.
         for (String partition : TEST_PARTITIONS) {
             final String encodedPartition = URLEncoder.encode(getPartition(partition).toString(), "UTF-8");
-            System.out.println("encodedPartition: " + encodedPartition);
-            System.out.println("sum " + getSumString(partition));
             wireMock.register(get("/instance-dsl/sum?partition=" + encodedPartition)
                     .willReturn(aResponse().withBody(getSumString(partition))));
         }
