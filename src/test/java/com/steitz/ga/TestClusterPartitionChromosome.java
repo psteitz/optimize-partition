@@ -77,6 +77,9 @@ public class TestClusterPartitionChromosome {
         assertEquals(-15,clusterPartitionChromosome.fitness(), 1e-12);                                                                      
     }
 
+    /**
+    * Test cluster gaussian deviates around 5 centroids.
+    */
     @Test
     public void testClusterPartitionChromosomeClusteredUniverse() {
         System.out.println("Starting testClusterPartitionChromosomeClusteredUniverse");
