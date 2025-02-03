@@ -5,15 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.steitz.ga</groupId>
-    <artifactId>optimize-partition-parent</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0</version>
-    <name>Optimize-Partition Parent</name>
-
-    <modules>
-        <module>lib</module>
-        <module>app</module>
-    </modules>
+    <artifactId>optimize-partition-app</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>Optimize-Partition Application</name>
 
     <build>
         <pluginManagement>
@@ -30,6 +25,11 @@
         </pluginManagement>
     </build>
     <dependencies>
+       <dependency>
+         <groupId>com.steitz.ga</groupId>
+         <artifactId>optimize-partition</artifactId>
+         <version>1.0-SNAPSHOT</version>
+       </dependency>
        <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
