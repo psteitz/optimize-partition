@@ -7,12 +7,12 @@
     <groupId>com.steitz.ga</groupId>
     <artifactId>optimize-partition-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0</version>
+    <version>1.0-SNAPSHOT</version>
     <name>Optimize-Partition Parent</name>
 
     <modules>
-        <module>lib</module>
-        <module>app</module>
+        <module>optimize-partition-lib</module>
+        <module>optimize-partition-app</module>
     </modules>
 
     <build>

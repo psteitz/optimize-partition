@@ -3,25 +3,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.steitz.ga</groupId>
+    <parent>
+      <groupId>com.steitz.ga</groupId>
+      <artifactId>optimize-partition-parent</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </parent>
     <artifactId>optimize-partition-app</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
     <name>Optimize-Partition Application</name>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>17</maven.compiler.release>
+    </properties>
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>1.17</source>
-                        <target>1.17</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
@@ -41,7 +35,7 @@
     <dependencies>
        <dependency>
          <groupId>com.steitz.ga</groupId>
-         <artifactId>optimize-partition</artifactId>
+         <artifactId>optimize-partition-lib</artifactId>
          <version>1.0-SNAPSHOT</version>
        </dependency>
        <dependency>
