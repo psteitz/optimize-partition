@@ -16,12 +16,18 @@ public abstract class PartitionOptimizer {
     /**
      * Get the configuration for the partition optimization algorithm.
      */
-    public abstract PartitionOptimizerConfig getConfig();
+    public abstract PartitionOptimizerConfig getPartionOptimizerConfig();
 
     /**
-     * Generate an initial population of chromosomes
+     * Generate an initial population of chromosomes representing partitions of the
+     * universe.
+     * <p>
+     * Rows are double arrays of length <dimension>. Each row is an element of the
+     * universe.
+     * <p>
+     * Partitions are sets of dimension-length double arrays from the universe.
      */
-    public abstract Population getInitialPopulation(PartitionOptimizerConfig config);
+    public abstract Population getInitialPopulation(PartitionOptimizerConfig config, double[][] universe);
 
     /**
      * Get the stopping condition for the genetic algorithm
@@ -34,20 +40,27 @@ public abstract class PartitionOptimizer {
     public abstract GeneticAlgorithm createGeneticAlgorithm(PartitionOptimizerConfig config);
 
     /**
+     * Get the universe of elements to be partitioned.
+     * 
+     * @return
+     */
+    protected abstract double[][] getUniverse();
+
+    /**
      * Execute the partition optimization algorithm.
      * <p>
      * Default implementation writes the best fitness and partition to the console.
      */
     public void execute() {
         // Generate initial population
-        final Population initialPopulation = getInitialPopulation(getConfig());
+        final Population initialPopulation = getInitialPopulation(getPartionOptimizerConfig(), getUniverse());
 
         // Set stopping condition
-        final StoppingCondition stoppingCondition = getStoppingCondition(getConfig());
+        final StoppingCondition stoppingCondition = getStoppingCondition(getPartionOptimizerConfig());
 
         // run the algorithm
         final Population finalPopulation = createGeneticAlgorithm(
-                getConfig()).evolve(initialPopulation, stoppingCondition);
+                getPartionOptimizerConfig()).evolve(initialPopulation, stoppingCondition);
 
         // best chromosome from the final population
         final Chromosome bestFinal = finalPopulation.getFittestChromosome();
