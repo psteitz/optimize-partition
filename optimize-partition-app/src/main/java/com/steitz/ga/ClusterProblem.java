@@ -1,16 +1,26 @@
 package com.steitz.ga;
 
 /**
- * Clustering problem specification.
+ * Clustering problem specification and data.
  */
 
 public class ClusterProblem {
     /** Number of clusters */
-    private final int numClusters;
+    private int numClusters;
     /** Number of points */
     private final int numPoints;
     /** Points to cluster */
     private final double[][] points;
+
+    /**
+     * Create a clustering problem from a ClusterProblemConfig and points.
+     * 
+     * @param config configuration for the clustering problem
+     * @param points points to cluster
+     */
+    public ClusterProblem(ClusterProblemConfig config, double[][] points) {
+        this(config.getNumClusters(), points);
+    }
 
     /**
      * Create a new clustering problem.
@@ -48,6 +58,27 @@ public class ClusterProblem {
             System.arraycopy(points[i], 0, copy[i], 0, points[i].length);
         }
         return copy;
+    }
+
+    public void setClusterProblemConfig(ClusterProblemConfig config) {
+        this.numClusters = config.getNumClusters();
+    }
+
+    public ClusterProblemConfig getClusterProblemConfig() {
+        return new ClusterProblemConfig(numClusters);
+    }
+
+    protected static class ClusterProblemConfig {
+        private final int numClusters;
+
+        public ClusterProblemConfig(int numClusters) {
+            this.numClusters = numClusters;
+        }
+
+        public int getNumClusters() {
+            return numClusters;
+        }
+
     }
 
 }

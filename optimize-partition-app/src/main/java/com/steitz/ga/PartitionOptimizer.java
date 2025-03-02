@@ -27,24 +27,17 @@ public abstract class PartitionOptimizer {
      * <p>
      * Partitions are sets of dimension-length double arrays from the universe.
      */
-    public abstract Population getInitialPopulation(PartitionOptimizerConfig config, double[][] universe);
+    public abstract Population getInitialPopulation(PartitionOptimizerConfig config);
 
     /**
      * Get the stopping condition for the genetic algorithm
      */
-    public abstract StoppingCondition getStoppingCondition(PartitionOptimizerConfig config);
+    public abstract StoppingCondition getStoppingCondition();
 
     /**
      * Create GA instance
      */
     public abstract GeneticAlgorithm createGeneticAlgorithm(PartitionOptimizerConfig config);
-
-    /**
-     * Get the universe of elements to be partitioned.
-     * 
-     * @return
-     */
-    protected abstract double[][] getUniverse();
 
     /**
      * Execute the partition optimization algorithm.
@@ -53,10 +46,10 @@ public abstract class PartitionOptimizer {
      */
     public void execute() {
         // Generate initial population
-        final Population initialPopulation = getInitialPopulation(getPartionOptimizerConfig(), getUniverse());
+        final Population initialPopulation = getInitialPopulation(getPartionOptimizerConfig());
 
         // Set stopping condition
-        final StoppingCondition stoppingCondition = getStoppingCondition(getPartionOptimizerConfig());
+        final StoppingCondition stoppingCondition = getStoppingCondition();
 
         // run the algorithm
         final Population finalPopulation = createGeneticAlgorithm(

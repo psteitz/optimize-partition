@@ -1,7 +1,6 @@
 package com.steitz.ga;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Arrays;
@@ -88,7 +87,7 @@ public class TestClusterPartitionChromosome {
 
         // Set the tournament arity - the number of chromosomes to include in each
         // population
-        final int TOURNAMENT_ARITY = 1000;
+        final int TOURNAMENT_ARITY = 100;
 
         // Set the number of generations to run the genetic algorithm
         final int NUM_GENERATIONS = 100;
@@ -98,9 +97,9 @@ public class TestClusterPartitionChromosome {
         // deviates around the five centroids in sequence. So universe[5], ...,
         // universe[14] are deviates
         // around universe[0], etc
-        final double[][] universe = clusteredUniverse(10, 5, 10, .1, DIMENSION);
+        final double[][] universe = ClusterPartitionUtils.randomClusteredUniverse(10, 5, 10, .1, DIMENSION);
 
-        dumpUniverseDistanceMetrics(universe, 5);
+        ClusterPartitionUtils.dumpUniverseDistanceMetrics(universe, 5);
 
         final ClusterPartitionFitness fitness = new ClusterPartitionFitness(DIMENSION, universe);
 
@@ -134,7 +133,7 @@ public class TestClusterPartitionChromosome {
         if (bestFinal.fitness() < -27) {
             System.out.println("Failing.  Solution fitness too low.");
             System.out.println("Universe");
-            dumpUniverse(universe);
+            ClusterPartitionUtils.dumpUniverse(universe);
             System.out.println("Best partition found");
             System.out.println(bestFinal);
             fail();
@@ -192,102 +191,6 @@ public class TestClusterPartitionChromosome {
             out.addChromosome(chromosomes[i]);
         }
         return out;
-    }
-
-    /**
-     * Create a clustered universe of dimension-dimensional vectors with the given
-     * cluster size and number of clusters.
-     * 
-     * Starts by generating numClusters centroids randomly but with at least
-     * centroidSeparation euclidean distance between
-     * any pair of centroids. These are the first numClusters rows of the output
-     * array.
-     * 
-     * Then generates clusterSize random deviates around each of the centroids and
-     * adds these to the output array.
-     * 
-     * @param clusterSize        size of each cluster
-     * @param numClusters        number of clusters
-     * @param centroidSeparation minimum distance between centroids
-     * @param sigma              standard deviation for random deviates
-     * @param dimension          dimension of vectors in the universe
-     * @return randomly generated universe clustered around numClusters randomly
-     *         generated centroids
-     */
-    private double[][] clusteredUniverse(int clusterSize, int numClusters, double centroidSeparation, double sigma,
-            int dimension) {
-        final RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
-
-        final double[][] out = new double[numClusters * clusterSize][dimension];
-
-        // Generate a centroid for each of the numClusters clusters.
-        //
-        // Start with the zero vector as initial cluster and then choose new centroids
-        // by
-        // randomly generating points and rejecting candidates that are within
-        // centroidSeparation
-        // of any of the previously defined centroid points.
-        final double[][] centroids = new double[numClusters][dimension];
-        final double sepSquared = centroidSeparation * centroidSeparation;
-        for (int i = 0; i < numClusters; i++) {
-            // Generate a random point in R^dimension - uniform distribution over
-            // [-centroidSeparation^2, centroidSeparation^2]
-            // for each component
-            boolean done = false;
-            while (!done) {
-                // Fill candidate new centroid with random values
-                for (int j = 0; j < dimension; j++) {
-                    centroids[i][j] = randomDataGenerator.nextUniform(-sepSquared, sepSquared);
-                }
-                // Compare centroids[i] with the other ones defined so far
-                // Reject if it is too close to any of them
-                done = true;
-                for (int j = 0; j < i; j++) {
-                    if (MathArrays.distance(centroids[i], centroids[j]) < centroidSeparation) {
-                        done = false;
-                    }
-                }
-            }
-        }
-
-        // Verify that the centroids are separated
-        for (int i = 0; i < numClusters; i++) {
-            for (int j = 0; j < i; j++) {
-                assert (MathArrays.distance(centroids[i], centroids[j]) > centroidSeparation);
-            }
-        }
-
-        // Fill the out array.
-        // Start with add centroids at the beginning of the array
-        for (int i = 0; i < numClusters; i++) {
-            out[i] = centroids[i];
-        }
-
-        int outIndex = numClusters; // Next index to write to out[]
-
-        // Now generate clusterSize - 1 elements around each centroid.
-        // Generate componentDeviations as gaussian random variates with mean 0 and
-        // standard deviation sigma
-        // add centroid + componentDeviations to out
-
-        // loop over centroids, adding clusterSize - 1 deviates about each centroid
-        for (int i = 0; i < numClusters; i++) {
-            for (int j = 0; j < clusterSize - 1; j++) {
-                // Create deviate vector to add to centroid
-                final double[] deviate = new double[dimension];
-                for (int k = 0; k < dimension; k++) {
-                    deviate[k] = randomDataGenerator.nextGaussian(0, sigma) + centroids[i][k];
-                }
-                out[outIndex++] = deviate;
-            }
-        }
-        return out;
-    }
-
-    private void dumpUniverse(double[][] universe) {
-        for (int i = 0; i < 50; i++) {
-            System.out.println(Arrays.toString(universe[i]));
-        }
     }
 
     /**

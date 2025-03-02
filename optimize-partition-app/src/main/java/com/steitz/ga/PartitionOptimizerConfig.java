@@ -12,16 +12,6 @@ public class PartitionOptimizerConfig {
     private final double crossoverRate;
     private final double elitismRate;
 
-    public PartitionOptimizerConfig(int populationSize, int numGenerations, double mutationRate, double crossoverRate,
-            double elitismRate, int tournamentArity) {
-        this.populationSize = populationSize;
-        this.numGenerations = numGenerations;
-        this.mutationRate = mutationRate;
-        this.crossoverRate = crossoverRate;
-        this.elitismRate = elitismRate;
-        this.tournamentArity = tournamentArity;
-    }
-
     public int getPopulationSize() {
         return populationSize;
     }
@@ -47,6 +37,18 @@ public class PartitionOptimizerConfig {
     }
 
     /**
+     * Construct a new builder for PartitionOptimizerConfig using a builder instance
+     */
+    public PartitionOptimizerConfig(Builder builder) {
+        this.populationSize = builder.populationSize;
+        this.numGenerations = builder.numGenerations;
+        this.tournamentArity = builder.tournamentArity;
+        this.mutationRate = builder.mutationRate;
+        this.crossoverRate = builder.crossoverRate;
+        this.elitismRate = builder.elitismRate;
+    }
+
+    /**
      * Builder class for PartitionOptimizerConfig
      */
     public static class Builder {
@@ -56,6 +58,9 @@ public class PartitionOptimizerConfig {
         private double mutationRate;
         private double crossoverRate;
         private double elitismRate;
+
+        public Builder() {
+        }
 
         public Builder populationSize(int populationSize) {
             this.populationSize = populationSize;
@@ -88,9 +93,7 @@ public class PartitionOptimizerConfig {
         }
 
         public PartitionOptimizerConfig build() {
-            return new PartitionOptimizerConfig(populationSize, numGenerations, mutationRate, crossoverRate,
-                    elitismRate,
-                    tournamentArity);
+            return new PartitionOptimizerConfig(this);
         }
     }
 }

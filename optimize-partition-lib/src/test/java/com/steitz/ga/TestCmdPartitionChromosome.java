@@ -59,6 +59,7 @@ public class TestCmdPartitionChromosome {
         // Skip for windows
         if (System.getProperty("os.name").contains("indows")) {
             System.out.println(System.getProperty("os.name"));
+            System.err.println("Skipping test.  Unsuppprted OS.");
             return;
         }
         System.out.println("Starting...");
