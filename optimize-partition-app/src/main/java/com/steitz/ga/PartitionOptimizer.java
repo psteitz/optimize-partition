@@ -51,6 +51,9 @@ public abstract class PartitionOptimizer {
         // Set stopping condition
         final StoppingCondition stoppingCondition = getStoppingCondition();
 
+        // Display configuration
+        System.out.println("Executing PartitionOptimzer with config " + getPartionOptimizerConfig());
+
         // run the algorithm
         final Population finalPopulation = createGeneticAlgorithm(
                 getPartionOptimizerConfig()).evolve(initialPopulation, stoppingCondition);

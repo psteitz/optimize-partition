@@ -17,6 +17,10 @@ public class ClusterPartitionOptimizerConfig extends PartitionOptimizerConfig {
         return numClusters;
     }
 
+    public String toString() {
+        return super.toString() + ", Number of clusters: " + numClusters;
+    }
+
     public static class Builder extends PartitionOptimizerConfig.Builder {
 
         private int numClusters;

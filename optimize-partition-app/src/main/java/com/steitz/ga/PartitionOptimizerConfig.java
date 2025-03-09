@@ -36,6 +36,14 @@ public class PartitionOptimizerConfig {
         return tournamentArity;
     }
 
+    public String toString() {
+        return "Population size: " + populationSize + ", Number of generations: " + numGenerations
+                + ", Tournament arity: "
+                + tournamentArity + ", Mutation rate: " + mutationRate + ", Crossover rate: " + crossoverRate
+                + ", Elitism rate: "
+                + elitismRate;
+    }
+
     /**
      * Construct a new builder for PartitionOptimizerConfig using a builder instance
      */

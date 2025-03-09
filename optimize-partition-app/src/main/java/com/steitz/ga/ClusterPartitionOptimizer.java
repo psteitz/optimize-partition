@@ -87,6 +87,10 @@ public class ClusterPartitionOptimizer extends PartitionOptimizer {
         return out;
     }
 
+    public String toString() {
+        return "ClusterPartitionOptimizer: " + partionOptimizerConfig.toString() + ", " + clusterProblem.toString();
+    }
+
     /**
      * Main method for the ClusterPartitionOptimizer.
      * 
@@ -141,10 +145,8 @@ public class ClusterPartitionOptimizer extends PartitionOptimizer {
         // We read the universe file twice
         // First to count the number of rows and columns
         // Then to read the data into the universe array
-
-        // Count the number of rows and columns in the universe file
-        int numPoints = 0;
-        int dimension = 0;
+        int numPoints = 0; // number of points in the universe = number of rows = number of lines
+        int dimension = 0; // dimension of the universe = number of cols = number of values in a line
         try (BufferedReader br = new BufferedReader(new FileReader(universeFilePath))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -172,6 +174,7 @@ public class ClusterPartitionOptimizer extends PartitionOptimizer {
                 for (int j = 0; j < values.length; j++) {
                     universe[i][j] = Double.parseDouble(values[j]);
                 }
+                i++;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -228,6 +231,8 @@ public class ClusterPartitionOptimizer extends PartitionOptimizer {
         final ClusterPartitionOptimizer clusterPartitionOptimizer = new ClusterPartitionOptimizer(
                 partitionOptimizerConfig, clusterProblem, universe);
 
+        System.out.println("Executing ClusterPartitionOptimizer");
+        System.out.println(clusterPartitionOptimizer.toString());
         // Execute the optimization
         clusterPartitionOptimizer.execute();
     }

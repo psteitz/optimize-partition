@@ -9,6 +9,8 @@ public class ClusterProblem {
     private int numClusters;
     /** Number of points */
     private final int numPoints;
+    /** Dimension of points */
+    private final int dimension;
     /** Points to cluster */
     private final double[][] points;
 
@@ -32,10 +34,15 @@ public class ClusterProblem {
         this.numClusters = numClusters;
         this.numPoints = points.length;
         this.points = points;
+        this.dimension = points[0].length;
     }
 
     public int getNumClusters() {
         return numClusters;
+    }
+
+    public int getDimension() {
+        return dimension;
     }
 
     public int getNumPoints() {
@@ -44,6 +51,10 @@ public class ClusterProblem {
 
     public double[] getPoint(int i) {
         return points[i];
+    }
+
+    public String toString() {
+        return "Number of clusters: " + numClusters + ", Number of points: " + numPoints + ", Dimension: " + dimension;
     }
 
     /**

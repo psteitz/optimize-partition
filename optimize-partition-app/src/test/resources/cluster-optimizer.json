@@ -1,13 +1,13 @@
  {
      "ClusterProblem": {
-     "numClusters": 3
+     "numClusters": 5
      },
      "PartitionOptimizerConfig": {
-     "populationSize": 100,
+     "populationSize": 1000,
      "numGenerations": 100,
-     "tournamentArity": 2,
-     "mutationRate": 0.01,
-      "crossoverRate": 0.8,
+     "tournamentArity": 100,
+     "mutationRate": 0.1,
+      "crossoverRate": 1.0,
       "elitismRate": 0.1
       }
   }

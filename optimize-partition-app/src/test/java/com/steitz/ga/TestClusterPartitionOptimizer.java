@@ -25,8 +25,7 @@ public class TestClusterPartitionOptimizer {
      */
     @Before
     public void setUp() {
-        final double[][] universe = ClusterPartitionUtils.randomClusteredUniverse(100, 5, 10.0, 0.1, 3);
-        // Get $HOME
+        final double[][] universe = ClusterPartitionUtils.randomClusteredUniverse(10, 5, 10.0, 0.1, 3);
         final String home = System.getProperty("user.home");
         try {
             fileLock.lock();
