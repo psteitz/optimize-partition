@@ -67,7 +67,7 @@ Optimizing this objective function is the same as performing k-means clustering 
 #### Implementation
 The ```testClusterPartitionChromosomeClusteredUniverse``` case in
 https://github.com/psteitz/optimize-partition/blob/main/src/test/java/com/steitz/ga/TestClusterPartitionChromosome.java 
-does 1-3 above and verifies that after 100 generations the best partitio is the k-means optimal one (each of 5 centroids and
+does 1-3 above and verifies that after 100 generations the best partition is the k-means optimal one (each of 5 centroids and
 their deviates make 5 partition pieces).
 
  
