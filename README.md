@@ -62,7 +62,7 @@ optimize-partition depends on Apache Commons Math, version 3.6.1
 
 4. Run the Genetic Algorithm starting with a random population of partitions with fitness defined by the objective function in 3. and verify that after 100 generations the fittest partition is the correct one (centroids and their deviates in each of 5 pieces).
 
-Optimizing this objective function is the similar to performing k-means clustering over the universe with $k=5$.  For data generated as above, it will return the same clusters as k-means.  The difference is that the objective function measures within-cluster variation rather than distances to centroids.
+Optimizing this objective function is similar to performing k-means clustering over the universe with $k=5$.  For data generated as above, it will return the same clusters as k-means.  The difference is that the objective function measures within-cluster variation rather than distances to centroids.
 
 #### Implementation
 The ```testClusterPartitionChromosomeClusteredUniverse``` case in
