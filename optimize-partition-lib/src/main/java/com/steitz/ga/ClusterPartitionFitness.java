@@ -9,11 +9,9 @@ import org.apache.commons.math3.util.MathArrays;
 
 /**
  * Compute fitness of the partition by negative sum of squared pairwise
- * euclidean
- * distances among elements of partition pieces.
+ * euclidean distances among elements of partition pieces.
  * Universe is set of dimension-dimensional vectors.
  */
-
 public class ClusterPartitionFitness implements PartitionFitness {
 
     /** dimension of the space that the points to be clustered come from. */
