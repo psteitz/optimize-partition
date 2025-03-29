@@ -8,9 +8,9 @@ import java.util.Set;
 import org.apache.commons.math3.util.MathArrays;
 
 /**
- * Compute fitness of the partition by negative sum of squared pairwise
- * euclidean
- * distances among elements of partition pieces.
+ * Compute fitness of the partition using the negated sum of squared pairwise
+ * euclidean distances between elements of partition pieces.
+ * <p>
  * Universe is set of dimension-dimensional vectors.
  */
 
@@ -41,8 +41,9 @@ public class ClusterPartitionFitness implements PartitionFitness {
     @Override
     public double fitness(List<Integer> partition) {
 
-        // Pieces is a map keyed on partition piece number with value a set of indexes
+        // Pieces is a map keyed on partition piece number returning a set of indexes
         // of elements in the piece.
+        // pieces.get(i) is the set of indexes of universe points in partition piece i.
         final Map<Integer, Set<Integer>> pieces = getPieces(partition);
 
         // Sum of squared pairwise distances within partition piece

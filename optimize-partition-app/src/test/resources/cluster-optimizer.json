@@ -4,10 +4,10 @@
      },
      "PartitionOptimizerConfig": {
      "populationSize": 1000,
-     "numGenerations": 100,
+     "numGenerations": 40,
      "tournamentArity": 100,
      "mutationRate": 0.1,
-      "crossoverRate": 1.0,
-      "elitismRate": 0.1
+     "crossoverRate": 1.0,
+     "elitismRate": 0.1
       }
   }

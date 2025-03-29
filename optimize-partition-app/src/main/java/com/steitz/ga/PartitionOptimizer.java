@@ -4,6 +4,8 @@ import org.apache.commons.math3.genetics.Chromosome;
 import org.apache.commons.math3.genetics.GeneticAlgorithm;
 import org.apache.commons.math3.genetics.Population;
 import org.apache.commons.math3.genetics.StoppingCondition;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Abstract class for partition optimization using the genetic algorithm.
@@ -39,6 +41,8 @@ public abstract class PartitionOptimizer {
      */
     public abstract GeneticAlgorithm createGeneticAlgorithm(PartitionOptimizerConfig config);
 
+    private static final Logger logger = LogManager.getLogger(PartitionOptimizer.class);
+
     /**
      * Execute the partition optimization algorithm.
      * <p>
@@ -62,8 +66,8 @@ public abstract class PartitionOptimizer {
         final Chromosome bestFinal = finalPopulation.getFittestChromosome();
 
         // Display results
-        System.out.println("Best fitness: " + bestFinal.fitness());
-        System.out.println("Best Partition:");
-        System.out.println(bestFinal);
+        logger.info("Best fitness: " + bestFinal.fitness());
+        logger.info("Best Partition:");
+        logger.info(bestFinal);
     }
 }

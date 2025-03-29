@@ -15,6 +15,20 @@ import org.json.simple.JSONObject;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * PartitionOptimizer that computes fitness by summing within-partition
+ * differences for all pairs of points in a partition piece.
+ * <p>
+ * The universe is a set of points in a high-dimensional space. The goal is to
+ * partition the universe into a given number of clusters such that the points
+ * in each cluster are close to each other and far from points in other
+ * clusters.
+ * <p>
+ * The optimization is done using the genetic algorithm.
+ */
 
 public class ClusterPartitionOptimizer extends PartitionOptimizer {
 
@@ -27,6 +41,8 @@ public class ClusterPartitionOptimizer extends PartitionOptimizer {
      * Cluster problem
      */
     private final ClusterProblem clusterProblem;
+
+    private static final Logger logger = LogManager.getLogger(ClusterPartitionOptimizer.class);
 
     private final double[][] universe;
 
@@ -231,8 +247,8 @@ public class ClusterPartitionOptimizer extends PartitionOptimizer {
         final ClusterPartitionOptimizer clusterPartitionOptimizer = new ClusterPartitionOptimizer(
                 partitionOptimizerConfig, clusterProblem, universe);
 
-        System.out.println("Executing ClusterPartitionOptimizer");
-        System.out.println(clusterPartitionOptimizer.toString());
+        logger.info("Executing ClusterPartitionOptimizer");
+        logger.info(clusterPartitionOptimizer.toString());
         // Execute the optimization
         clusterPartitionOptimizer.execute();
     }
