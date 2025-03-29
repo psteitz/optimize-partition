@@ -47,7 +47,7 @@ Test classes provide examples for how to do each of these
 ## Dependencies
 optimize-partition depends on Apache Commons Math, version 3.6.1
 
-## Experiments
+## Examples
 ### Clustering
  1. Start with a universe of length 3 real vectors generated as follows.
     * Generate 5 random vectors making sure that no two of them are closer than 10 units apart.
@@ -69,5 +69,7 @@ The ```testClusterPartitionChromosomeClusteredUniverse``` case in
 https://github.com/psteitz/optimize-partition/blob/main/src/test/java/com/steitz/ga/TestClusterPartitionChromosome.java 
 does 1-3 above and verifies that after 100 generations the best partition is the k-means optimal one (each of 5 centroids and
 their deviates make 5 partition pieces).
+
+#### Experiments
 
  
