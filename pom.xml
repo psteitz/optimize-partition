@@ -16,19 +16,30 @@
     </modules>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>1.17</source>
-                        <target>1.17</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+      <pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <source>1.17</source>
+              <target>1.17</target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </pluginManagement>
     </build>
+    <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>5.11.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>  
+    </dependencies>
+  </dependencyManagement>
     <dependencies>
        <dependency>
         <groupId>org.junit</groupId>
@@ -37,6 +48,16 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>  
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <scope>test</scope>
+      </dependency>
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-core</artifactId>
