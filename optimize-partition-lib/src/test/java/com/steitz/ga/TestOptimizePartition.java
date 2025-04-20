@@ -18,6 +18,16 @@ import org.junit.jupiter.api.Test;
  */
 public class TestOptimizePartition {
 
+    /**
+     * Create a random initial population of MaxValuePartitionChromosomes.
+     * 
+     * Universe size = 100
+     * Number of partition pieces = 10
+     * initial population size = 1000
+     * 
+     * @return initial Population
+     * @see MaxValuePartitionChromosome
+     */
     private Population getInitialPopulation() {
 
         // Set the size of the universe
@@ -76,14 +86,11 @@ public class TestOptimizePartition {
      */
     @Test
     public void testOptimizeMaxValuePartition() {
-        System.out.println("Generating initial population");
-
-        // Set the tournament arity - the number of chromosomes to include in each
-        // population
-        final int TOURNAMENT_ARITY = 1000;
+        // Set the tournament arity - the population to source pairs of parents from
+        final int TOURNAMENT_ARITY = 100;
 
         // Set the number of generations to run the genetic algorithm
-        final int NUM_GENERATIONS = 100;
+        final int NUM_GENERATIONS = 25;
 
         // initialize a new genetic algorithm
         GeneticAlgorithm ga = new GeneticAlgorithm(
@@ -94,6 +101,7 @@ public class TestOptimizePartition {
                 new TournamentSelection(TOURNAMENT_ARITY));
 
         // initial population
+        System.out.println("Generating initial population");
         Population initial = getInitialPopulation();
         System.out.println("Generated initial population");
 

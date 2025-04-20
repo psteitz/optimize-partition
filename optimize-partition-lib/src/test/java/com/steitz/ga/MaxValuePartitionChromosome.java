@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
  */
 
 public class MaxValuePartitionChromosome extends PartitionChromosome {
-    /// umiverse stores the values of its elements
+    // Hardwire static universe shared by all MaxValuePartitionChromosomes
     private static final int[] universe = new int[100];
 
-    // Setup universe to have value 10 for first 5 elements, 0 for others.
-    // This makes a partition optimal if it splits the first 5 elements across
-    // pieces. The fitness of such a partition is 50.
+    // Statically initialize universe to have value 10 for first 5 elements, 0 for
+    // others. This makes a partition optimal if it splits the first 5 elements
+    // across pieces. The fitness of such a partition is 50.
     static {
         for (int i = 0; i < universe.length; i++) {
             if (i < 5) {

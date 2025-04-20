@@ -41,6 +41,9 @@ public abstract class PartitionOptimizer {
      */
     public abstract GeneticAlgorithm createGeneticAlgorithm(PartitionOptimizerConfig config);
 
+    /**
+     * Get the logger for this class
+     */
     private static final Logger logger = LogManager.getLogger(PartitionOptimizer.class);
 
     /**
